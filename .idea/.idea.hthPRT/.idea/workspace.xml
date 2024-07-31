@@ -5,11 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e0a8a4d-a5bd-4734-bd2c-6ef65d0267a6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Probe.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Probe.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/ProbeVolume.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/ProbeVolume.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/ProbeVolumeData.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Inspector.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Inspector/PRTprobeInspector.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/PRTprobe.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Shaders.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Shaders/DebugSH.compute" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Shaders/DebugSH.compute.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Shaders/Relight.compute" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Shaders/Relight.compute.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Shaders/SampleSurfel.compute" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Shaders/captureAlbedo.shader" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Shaders/captureAlbedo.shader.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Shaders/captureNormal.shader" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Shaders/captureNormal.shader.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Shaders/captureWorldPos.shader" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Shaders/captureWorldPos.shader.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Shaders/probeIrradiance.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.hthPRT/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.hthPRT/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Probe.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Probe.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Probe.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Probe.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PRTprobe.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ProbeVolume.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ProbeVolume.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ProbeVolumeData.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ProbeVolumeData.cs.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +40,14 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/ProbeVolumeData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/aec3a143be31489f8782c487d4d86edd952a00/6d/48d663db/AssetDatabase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/aec3a143be31489f8782c487d4d86edd952a00/ff/1799ad3c/InspectorElement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Inspector/PRTprobeInspector.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@14.0.9/ShaderLibrary/Common.hlsl" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@14.0.9/ShaderLibrary/CommonMaterial.hlsl" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@14.0.9/ShaderLibrary/Lighting.hlsl" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@14.0.9/ShaderLibrary/RealtimeLights.hlsl" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@14.0.9/ShaderLibrary/Shadows.hlsl" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -29,12 +56,16 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2jKcrBIzGM5DUCY1VOuNBqmWvYQ" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -100,6 +131,24 @@
       <updated>1721139404372</updated>
       <workItem from="1721139405864" duration="2001000" />
       <workItem from="1721172991944" duration="2605000" />
+      <workItem from="1721220784934" duration="215000" />
+      <workItem from="1721229228646" duration="884000" />
+      <workItem from="1721230122259" duration="864000" />
+      <workItem from="1721261176224" duration="1842000" />
+      <workItem from="1721306556425" duration="5769000" />
+      <workItem from="1721657929969" duration="1862000" />
+      <workItem from="1721709432277" duration="1604000" />
+      <workItem from="1721736454769" duration="10434000" />
+      <workItem from="1721825150437" duration="6827000" />
+      <workItem from="1721913146079" duration="3629000" />
+      <workItem from="1722080762242" duration="4224000" />
+      <workItem from="1722178942134" duration="2608000" />
+      <workItem from="1722254109592" duration="13823000" />
+      <workItem from="1722270613593" duration="10000" />
+      <workItem from="1722338979757" duration="1976000" />
+      <workItem from="1722341069778" duration="8740000" />
+      <workItem from="1722351686865" duration="1632000" />
+      <workItem from="1722439986292" duration="417000" />
     </task>
     <servers />
   </component>

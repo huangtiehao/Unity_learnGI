@@ -1,0 +1,69 @@
+#pragma kernel CSMain
+#pragma multi_compile _ _MAIN_LIGHT_SHADOWS
+#pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
+#pragma multi_compile _ _SHADOWS_SOFT
+
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+
+
+struct Surfel
+{
+    float4 albedo;
+    float4 worldPos;
+    float4 normalSkyMask;
+
+};
+float3 probePos;
+RWStructuredBuffer<Surfel>surfels;
+RWStructuredBuffer<float3>SH9Coefficients;
+
+float SH[9];
+void calculateSH(float3 dir)
+{
+    SH[0]=1.0/2.0*sqrt(1/PI);
+    SH[1]=1.0/2.0*sqrt(3/PI)*dir.y;
+    SH[2]=1.0/2.0*sqrt(3/PI)*dir.z;
+    SH[3]=1.0/2.0*sqrt(3/PI)*dir.x;
+    SH[4]=1.0/2.0*sqrt(15/PI)*dir.x*dir.y;
+    SH[5]=1.0/2.0*sqrt(15/PI)*dir.y*dir.z;
+    SH[6]=1.0/4.0*sqrt(5/PI)*(2*dir.z*dir.z-dir.x*dir.x-dir.y*dir.y);
+    SH[7]=1.0/2.0*sqrt(15/PI)*dir.z*dir.x;
+    SH[8]=1.0/4.0*sqrt(15/PI)*dir.x*dir.x-dir.y*dir.y;
+}
+
+[numthreads(16,16,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    int index=id.x*16+id.y;
+
+    Surfel surfel = surfels[index];
+    
+    float skyMask=surfel.normalSkyMask.w;
+    if(skyMask==1.0f)return;
+    
+    float3 normal=surfel.normalSkyMask.xyz;
+    
+    // mainlight property
+    Light mainLight = GetMainLight();
+
+    float4 shadowCoord=TransformWorldToShadowCoord(surfel.worldPos.xyz);
+    float atten = SampleShadowmap(
+        TEXTURE2D_ARGS(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture), 
+        shadowCoord, 
+        GetMainLightShadowSamplingData(), 
+        GetMainLightShadowParams(), 
+        false
+    );
+    float NdotL=saturate(dot(normalize(mainLight.direction),normalize(normal)));
+    float3 radiance=mainLight.color*NdotL*surfel.albedo.xyz/PI*atten*(1-skyMask);
+    float3 dir=surfel.worldPos.xyz-probePos;
+    calculateSH(dir);
+    for(int i=0;i<9;++i)
+    {
+        SH9Coefficients[index*9+i]=4*PI*radiance*SH[i];
+    }
+}

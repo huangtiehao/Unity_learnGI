@@ -1,0 +1,66 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+struct Surfel
+{
+    float4 albedo;
+    float4 worldPos;
+    float4 normalSkyMask;
+
+};
+float3 probePos;
+StructuredBuffer<float>seeds;
+RWStructuredBuffer<Surfel>surfels;
+SamplerState sampler_point_clamp;
+TextureCube<float4> worldPos;
+TextureCube<float4> albedo;
+TextureCube<float4> normal;
+
+
+float PI;
+// ref: https://stackoverflow.com/questions/4200224/random-noise-functions-for-glsl
+float rand(float2 uv)
+{
+    return frac(sin(dot(uv,float2(12.9898,78.233)))*43758.5453);
+}
+
+float3 UniformSphereSample(float u,float v)
+{
+    float theta=acos(1-2*u);
+    float phi=degrees(2*PI*v); 
+
+    float x=sin(theta)*cos(phi);
+    float y=sin(theta)*sin(phi);
+    float z=cos(theta);
+    return float3(x,y, z);
+}
+
+
+[numthreads(16,16,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    PI=3.14159265f;
+    //二维随机数转三维方向
+    int index=id.x*16+id.y;
+    float2 xy=float2(id.x,id.y)/16.0;
+    float3 dir=UniformSphereSample(rand(xy),rand(seeds[index]*xy));
+    //三维方向采样cubemap得到surfel信息
+    Surfel surfel;
+    surfel.albedo=float4(0,0,0,0);
+    surfel.worldPos=float4(0,0,0,0);
+    surfel.normalSkyMask=float4(0,0,0,0);
+    surfel.albedo.xyz=albedo.SampleLevel(sampler_point_clamp,dir,0).xyz;
+    surfel.normalSkyMask.xyz=normal.SampleLevel(sampler_point_clamp,dir,0).xyz;
+    surfel.worldPos.xyz=worldPos.SampleLevel(sampler_point_clamp,dir,0).xyz;
+    surfel.normalSkyMask.w=1.0f-normal.SampleLevel(sampler_point_clamp,dir,0).w;
+
+    //如果是天空而不是表面
+    if(surfel.normalSkyMask.w==1.0f)surfel.worldPos.xyz=probePos+dir;
+
+    surfel.albedo=float4(dir,0);
+    surfels[index]=surfel;
+
+    
+}
